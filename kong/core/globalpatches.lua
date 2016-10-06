@@ -76,7 +76,7 @@ return function(options)
           -- if we'd do that in the 'init' phase, the Lua VM is not forked
           -- yet and all workers would end-up using the same seed.
           if not options.cli and ngx.get_phase() ~= "init_worker" then
-            error("math.randomseed() must be called in init_worker", 2)
+            ngx.log(ngx.WARN, "math.randomseed() must be called in init_worker context")
           end
 
           seed = ngx.time() + ngx.worker.pid()
